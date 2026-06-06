@@ -20,3 +20,29 @@ m == mat.length
 n == mat[i].length
 1 <= m, n <= 100
 mat[i][j] is either 0 or 1. */
+
+class Solution {
+    public int numSpecial(int[][] mat) {
+        int result = 0;
+        int row = mat.length;
+        int col = mat[0].length;        
+        int[] colCounts = new int[col];
+        int[] rowCounts = new int[row];
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(mat[i][j]==1){
+                    rowCounts[i]++;
+                    colCounts[j]++;
+                }
+            }
+        }
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(mat[i][j]==1 && rowCounts[i]==1 && colCounts[j]==1){
+                    result++;
+                }
+            }
+        }
+        return result;
+    }
+}
