@@ -26,3 +26,51 @@ descriptions[i].length == 3
 0 <= isLefti <= 1
 The binary tree described by descriptions is valid.
 */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode createBinaryTree(int[][] descriptions) {
+        HashMap<Integer, TreeNode> nodes = new HashMap<>();
+        Set<Integer> children = new HashSet<>();
+
+        for(int[] description:descriptions){
+            int parentVal = description[0];
+            int childVal = description[1];
+            int isLeft = description[2];
+            
+            TreeNode parent = nodes.getOrDefault(parentVal, new TreeNode(parentVal));
+            nodes.put(parentVal,parent);
+            
+            TreeNode child = nodes.getOrDefault(childVal, new TreeNode(childVal));
+            nodes.put(childVal, child);
+
+            if(isLeft==1){
+                parent.left = child;
+            }else{
+                parent.right = child;
+            }
+            children.add(childVal);
+        }
+        TreeNode root = null;
+        for(int nodeVal : nodes.keySet()){
+            if(!children.contains(nodeVal)){
+                root = nodes.get(nodeVal);
+                break;
+            }
+        }
+        return root;
+    }
+}
